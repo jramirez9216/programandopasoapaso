@@ -1,0 +1,44 @@
+function EnviarEmail(e) {
+  
+  //Variables de las respuestas de la encuesta
+  var marcaTemporal	= e.values[0];
+  var nombre	= e.values[1];
+  var grupo	= e.values[2];
+  var edad	= e.values[3];
+  
+  // Nombre del asunto del correo
+  var asuntoNombre = "Respuesta de Cuestionario de Evaluacion - Alumno: "+ nombre;
+  
+  //Cuerpo del correo
+  var htmlBody = "<table style=\"height: 187px;\" width=\"100%\">"
+                  +"<tbody>"
+                  +"<tr style=\"height: 71.5px; color: #ffffff;\">"
+                    +"<td style=\"width: 678px; height: 71.5px; background-color: #008000; text-align: center;\"><strong><span style=\"color: #ffffff;\">&nbsp;Notificaci&oacute;n</span></strong></td>"
+                    +"</tr>"
+                    +"<tr style=\"height: 85px;\">"
+                    +"<td style=\"width: 678px; height: 85px;\">"
+                    +"<p><strong>Hay una nueva notificación, enviada el dia:</strong> "+marcaTemporal+"</p>"
+                    +"<p></p>"
+                    +"<p><strong>Nombre:</strong> "+nombre+"</p>"
+                    +"<p><strong>Grupo: </strong> "+grupo+"</p>"
+                    +"<p><strong>Edad:</strong> "+edad+"</p>"
+                    +"</td>"
+                  +"</tr>"
+                +"</tbody>"
+                +"</table>";
+
+  // Destinatarios
+  var destinatarioTo = "jramirez9216@gmail.com";
+  // Destinatarios en copia oculta
+  var destinmatarioCC = "jramirez9216@gmail.com";
+  
+  //Notificacion del correo electronico
+  MailApp.sendEmail({
+    to: destinatarioTo,
+    cc: destinmatarioCC,
+    subject: asuntoNombre,
+    name: "Notificaciones - ProgramandoPasoaPaso",
+    htmlBody: htmlBody
+  });
+
+}
