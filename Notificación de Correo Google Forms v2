@@ -1,0 +1,60 @@
+function EnviarEmail(e) {  
+  
+  //Obtener todas las hojas de nuestro archivo
+  var getAllHojas = SpreadsheetApp.getActiveSpreadsheet();
+  //Obtener hoja por posicion
+  //var getHoja = getAllHojas.getSheets()[1];
+  //obtener hoja por nombre 
+  var getHoja = getAllHojas.getSheetByName("Hoja Prueba");
+  //Nombre de la hoja
+  var nameHoja = getHoja.getName();
+  var htmlScript = '';
+  var datos = getHoja.getDataRange().getValues();
+  for(var vrow = 0; vrow < datos.length; vrow++){
+  //[vrow] = Fila , [0] = Columna
+      htmlScript += "<p><strong>Autor: </strong> "+datos[vrow][0]+"</p>"
+      htmlScript += "<p><strong>Descripción: </strong> "+datos[vrow][1]+"</p>"
+  }
+  
+  
+  //Variables de las respuestas de la encuesta
+  var marcaTemporal	= e.values[0];
+  var nombre	= e.values[1];
+  var grupo	= e.values[2];
+  var edad	= e.values[3];
+  
+  // Nombre del asunto del correo
+  var asuntoNombre = "Respuesta de Cuestionario de Evaluacion - Alumno: "+ nombre;
+  
+  //Cuerpo del correo
+  var htmlBody = "<table style=\"height: 187px;\" width=\"100%\">"
+                  +"<tbody>"
+                  +"<tr style=\"height: 71.5px; color: #ffffff;\">"
+                    +"<td style=\"width: 678px; height: 71.5px; background-color: #008000; text-align: center;\"><strong><span style=\"color: #ffffff;\">&nbsp;Notificaci&oacute;n</span></strong></td>"
+                    +"</tr>"
+                    +"<tr style=\"height: 85px;\">"
+                    +"<td style=\"width: 678px; height: 85px;\">"
+                    +"<p><strong>Hay una nueva notificación, enviada el dia:</strong> "+marcaTemporal+"</p>"
+                    +"<p></p>"
+                    +"<p><strong>Nombre:</strong> "+nombre+"</p>"
+                    +"<p><strong>Grupo: </strong> "+grupo+"</p>"
+                    +"<p><strong>Edad:</strong> "+edad+"</p>"
+                    +"<p></p>"
+                    + htmlScript
+                    +"</td>"
+                  +"</tr>"
+                +"</tbody>"
+                +"</table>";
+
+  // Destinatarios
+  var destinatarioTo = "jramirez9216@gmail.com";
+  
+  //Notificacion del correo electronico
+  MailApp.sendEmail({
+    to: destinatarioTo,
+    subject: asuntoNombre,
+    name: "Notificaciones - ProgramandoPasoaPaso",
+    htmlBody: htmlBody
+  });
+
+}
